@@ -2,13 +2,16 @@ const mongoose = require('mongoose')
 
 var thingstodo = mongoose.model('thingstodo',{
   text :{
-    type : String
+    type : String,
+    minlength:1
 
   },completed:{
-    type :Boolean
+    type :Boolean,
+    default: true
 
   },completedAt :{
-    type :Number
+    type :Number,
+    default:0
   }
 })
 

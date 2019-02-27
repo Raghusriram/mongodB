@@ -1,5 +1,5 @@
 var express = require('express')
-var body-parser = require('body-parser')
+var bodyparser = require('body-parser')
 
 
 var {mongoose} = require('./db/mongooseconfig')
@@ -8,9 +8,32 @@ var {thingstodo} = require('./models/thingstodo')
 
 var app = express()
 
-app.listen(3000,()=>{
-  console.log('sucessfully connected');
+app.use(bodyparser.json())
+
+app.post('/usertodo',(req,res)=>{
+    var todo = new usertodo({
+      username : req.body.username
+    })
+    todo.save().then((doc)=>{
+      res.send(doc)
+    },(e)=>{
+      res.status(404).send(e)
+    })
 })
+
+app.get('/usertodo',(req,res)=>{
+  usertodo.find().then((usertodo)=>{
+    res.send({usertodo})
+  },(e)=>{
+    res.status(400).send(e)
+  })
+})
+
+app.listen(3000,()=>{
+  console.log('sucessfully connected ha');
+})
+
+module.exports = {app}
 
 //
 // var newtodo = new thingstodo({
